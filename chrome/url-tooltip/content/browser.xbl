@@ -29,9 +29,9 @@
 			<![CDATA[
 				const XLinkNS = "http://www.w3.org/1999/xlink";
 				var retval = false;
-				var label = null;
-				var alt = null;
-				var uri = null;
+				var label = "";
+				var alt = "";
+				var uri = "";
 				var tip = document.tooltipNode;
 				if (tip.namespaceURI == "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul") return false;
 
