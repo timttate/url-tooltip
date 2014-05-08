@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<prefwindow xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="URL Tooltip Options">
+    
+	<prefpane id="pane1">
+		<preferences>
+			<preference id="pref-wrapURL" name="extensions.url-tooltip.wrapURL" type="bool" />
+			<preference id="pref-titleSize" name="extensions.url-tooltip.titleSize" type="string" />
+			<preference id="pref-urlSize" name="extensions.url-tooltip.urlSize" type="string" />
+		</preferences>
+
+	<hbox>
+		<label value="Title Font Size:" width="100" />
+		<textbox label="Title Font Size" preference="pref-titleSize" />
+	</hbox>
+	<hbox>
+		<label value="URL Font Size:" width="100" />
+		<textbox label="URL Font Size" preference="pref-urlSize" />
+	</hbox>
+	<separator class="groove"/>
+	<checkbox id="wrapURLCheckbox"
+				label="Wrap long URLs"
+				tooltiptext="Windows Vista and Windows 7 truncate long tooltips. Set this option to preserve long URLs by wrapping to multiple lines."
+				preference="pref-wrapURL"/>
+	</prefpane>
+</prefwindow>

@@ -1,0 +1,27 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#aHTMLTooltip
+{
+	-moz-binding: url( "chrome://url-tooltip/content/browser.xbl#htmltooltip" );
+}
+
+#aHTMLTooltip description
+{
+	margin: 0;
+}
+
+#aHTMLTooltip description#label
+{
+	margin: 0;
+}
+
+#aHTMLTooltip description#uri
+{
+	margin: 2px 0 2px 0;
+}
+
+#aHTMLTooltip description#label[value=""],
+#aHTMLTooltip description#uri[value=""],
+{
+	display: none;
+}

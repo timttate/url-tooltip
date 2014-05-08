@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE bindings [
+<!ENTITY % globalDTD SYSTEM "chrome://global/locale/global.dtd">
+%globalDTD;
+]>
+
+<bindings id="url-tooltip-bindings"
+          xmlns="http://www.mozilla.org/xbl"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+
+<binding id="htmltooltip" extends="chrome://global/content/bindings/popup.xml#popup-base">
+	<content>
+		<xul:vbox>
+			<xul:description id="label" xbl:inherits="xbl:text=label" flex="1" />
+			<xul:description id="uri" xbl:inherits="xbl:text=uri" flex="1" />
+		</xul:vbox>
+	</content>
+	<implementation>
+		<constructor>
+			this.removeAttribute('onpopupshowing');
+		</constructor>
+
+	</implementation>
+	<handlers>
+		<handler event="popupshowing">
+			<![CDATA[
+				const XLinkNS = "http://www.w3.org/1999/xlink";
+				var retval = false;
+				var label = null;
+				var alt = null;
+				var uri = null;
+				var tip = document.tooltipNode;
+				if (tip.namespaceURI == "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul") return false;
+
+				el= tip;
+				while (!(label&&uri) && el)
+				{
+					if (el.nodeType == 1)
+					{
+						if (!label&&el.title)
+						{
+							//label= el.title.replace(/\s+/g, " ");
+							label = el.title.replace(/[\r\t]/g, ' ');
+							label = label.replace(/\n/g, '');
+							retval= true;
+						};
+						if (!uri&&el.href)
+						{
+							uri= el.href;
+							retval= true;
+						};
+					};
+					el= el.parentNode;
+				};
+				if (!label&&tip.alt)
+				{
+					//label= tip.alt.replace(/\s+/g, " ");
+					label = tip.alt.replace(/[\r\t]/g, ' ');
+					label = label.replace(/\n/g, '');
+				}
+				
+				// Set attributes
+				this.setAttribute("label", label);
+				this.setAttribute("uri", uri);
+				
+				// Get preference branch
+				var pref = Components.classes["@mozilla.org/preferences-service;1"]
+				.getService(Components.interfaces.nsIPrefService)
+				.getBranch("extensions.url-tooltip.");
+				
+				// initialize style variables
+				var titleStyle = "";
+				var urlStyle = "";
+				
+				// 
+				if( pref.getBoolPref( "wrapURL" ))
+				{
+					urlStyle += "white-space: normal; ";
+				}
+				else
+				{
+					urlStyle += "white-space: nowrap; ";
+				}
+
+				titleStyle += "font-size: " + pref.getCharPref( "titleSize" ) + ";";
+				urlStyle += "font-size: " + pref.getCharPref( "urlSize" ) + ";";
+				
+				getElementById( "label" ).setAttribute( "style", titleStyle );			
+				getElementById( "uri" ).setAttribute( "style", urlStyle );
+				
+				return retval;
+			]]>
+		</handler>
+	</handlers>
+</binding>
+
+
+</bindings>

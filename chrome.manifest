@@ -1,0 +1,3 @@
+content url-tooltip chrome/url-tooltip/content/
+
+style	chrome://browser/content/browser.xul chrome://url-tooltip/content/browser.css
