@@ -49,7 +49,7 @@
 						};
 						if (!uri&&el.href)
 						{
-							uri= el.href;
+							uri= decodeURI(el.href);
 							retval= true;
 						};
 					};
